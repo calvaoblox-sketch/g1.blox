@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<!--
+  =====================================================================
+  BloxG1 - Portal de notícias do Roblox (estilo G1)
+  Arquivo: index.html
+  ---------------------------------------------------------------------
+  Estrutura da página:
+    1. Header (data/hora em tempo real + categorias)
+    2. Ticker de "Últimas" (manchetes rolando)
+    3. Hero News (manchete principal + 2 chamadas)
+    4. Grade de notícias
+    5. Jogos em Alta (ranking com nº de jogadores)
+    6. Promo Codes ativos (tabela de códigos)
+    7. Vídeos / Em Alta
+    8. Footer (links, redes sociais e aviso)
+
+  IMAGENS:
+    Todas as imagens estão em /img (SVG temáticas geradas localmente),
+    então o site NUNCA fica com imagem quebrada. Para usar imagens
+    reais, basta trocar o atributo src pelas suas fotos.
+
+  COMO PERSONALIZAR:
+    - Notícias: duplique qualquer <article class="news-card">.
+    - Códigos: duplique uma <tr> dentro de .codes-table.
+    - Jogos: duplique um <li class="rank-item">.
+  =====================================================================
+-->
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="BloxG1 - Notícias, atualizações, promo codes, ranking de jogos e comunidade do universo Roblox." />
+  <title>BloxG1 - Notícias do Roblox</title>
+
+  <!-- Fonte moderna e legível (Roboto). Fallback para Arial/Sans-serif. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+
+  <!-- Folha de estilos principal -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- =================================================================
+       1. BARRA SUPERIOR (HEADER)
+       ================================================================= -->
+  <header class="site-header">
+    <!-- Faixa vermelha de destaque no topo (identidade G1) -->
+    <div class="top-strip">
+      <div class="container top-strip__inner">
+        <span class="top-strip__tag">ROBLOX</span>
+
+        <!-- Data e relógio em tempo real (preenchidos pelo script.js) -->
+        <div class="top-strip__clock" aria-live="polite">
+          <span id="current-date" class="clock-date">--/--/----</span>
+          <span class="clock-sep">|</span>
+          <span id="current-time" class="clock-time">--:--:--</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Linha principal do header: logo + navegação -->
+    <div class="container header-main">
+      <!-- Logo customizada "BloxG1" -->
+      <a href="#" class="logo" aria-label="BloxG1 - Página inicial">
+        <span class="logo__blox">Blox</span><span class="logo__g1">G1</span>
+      </a>
+
+      <!-- Botão do menu mobile (hambúrguer) -->
+      <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <!-- Menu de categorias principais do Roblox -->
+      <nav class="main-nav" id="main-nav" aria-label="Categorias">
+        <ul class="main-nav__list">
+          <li><a class="main-nav__link is-active" href="#">Jogos</a></li>
+          <li><a class="main-nav__link" href="#">Promo Codes</a></li>
+          <li><a class="main-nav__link" href="#">Atualizações</a></li>
+          <li><a class="main-nav__link" href="#">Comunidade</a></li>
+          <li><a class="main-nav__link" href="#">Eventos</a></li>
+          <li><a class="main-nav__link" href="#">Tutoriais</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- ===============================================================
+         2. TICKER DE ÚLTIMAS (manchetes rolando)
+         =============================================================== -->
+    <div class="ticker" aria-label="Últimas notícias">
+      <span class="ticker__label">ÚLTIMAS</span>
+      <div class="ticker__viewport">
+        <div class="ticker__track" id="ticker-track">
+          <!-- Cada <span> é uma manchete. O script.js duplica para loop infinito. -->
+          <span class="ticker__item">Blox Fruits: bug de fruta rara já pode ser corrigido por todos os jogadores</span>
+          <span class="ticker__item">Adopt Me! volta a liberar pets lendários por tempo limitado</span>
+          <span class="ticker__item">Novos códigos de Pet Sim 99 expiram em poucas horas — resgate já!</span>
+          <span class="ticker__item">Grow a Garden quebra recorde de jogadores simultâneos</span>
+          <span class="ticker__item">Dress to Impress anuncia colaboração surpresa na próxima semana</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- =================================================================
+         3. DESTAQUE PRINCIPAL (HERO NEWS)
+         ================================================================= -->
+    <section class="container hero" aria-label="Destaques">
+
+      <!-- Manchete principal -->
+      <article class="hero__main">
+        <img class="hero__main-img" src="img/hero-blox-fruits.svg" alt="Atualização do Blox Fruits" />
+        <div class="hero__main-overlay">
+          <span class="badge badge--red">ATUALIZAÇÃO 25</span>
+          <h1 class="hero__main-title">
+            Blox Fruits renasce com mapa inédito, frutas míticas e chefes colossais
+          </h1>
+          <p class="hero__main-sub">
+            Lorem ipsum dolor sit amet: a maior atualização do ano chega com sistema de
+            raids reformulado, três novas ilhas, mais de 40 frutas e recompensas
+            exclusivas para quem completar o novo arco da história.
+          </p>
+          <span class="meta">Há 12 minutos &middot; Por Redação BloxG1</span>
+        </div>
+      </article>
+
+      <!-- Coluna com 2 chamadas menores -->
+      <aside class="hero__side">
+        <article class="hero__card">
+          <img src="img/hero-adopt-me.svg" alt="Evento do Adopt Me!" />
+          <div class="hero__card-body">
+            <span class="badge badge--red">EVENTO</span>
+            <h2 class="hero__card-title">
+              Adopt Me! lança evento de inverno com pets exclusivos
+            </h2>
+            <span class="meta">Há 40 minutos</span>
+          </div>
+        </article>
+
+        <article class="hero__card">
+          <img src="img/hero-promo-codes.svg" alt="Promo codes da semana" />
+          <div class="hero__card-body">
+            <span class="badge badge--red">PROMO CODES</span>
+            <h2 class="hero__card-title">
+              Códigos ativos da semana: resgate itens grátis agora
+            </h2>
+            <span class="meta">Há 1 hora</span>
+          </div>
+        </article>
+      </aside>
+    </section>
+
+    <!-- =================================================================
+         4. GRADE DE NOTÍCIAS
+         ================================================================= -->
+    <section class="container news-grid-section" aria-label="Últimas notícias">
+      <h2 class="section-title">Últimas Notícias</h2>
+
+      <div class="news-grid">
+        <article class="news-card">
+          <img src="img/news-brookhaven.svg" alt="Brookhaven" />
+          <span class="badge badge--gray">JOGOS</span>
+          <h3 class="news-card__title">Brookhaven ganha mansões interativas e empregos na nova temporada</h3>
+          <p class="news-card__text">O simulador de vida mais jogado do Roblox adiciona dezenas de móveis, carros e segredos escondidos pela cidade.</p>
+          <span class="meta">Há 2 horas &middot; Jogos</span>
+        </article>
+
+        <article class="news-card">
+          <img src="img/news-pet-simulator.svg" alt="Pet Sim" />
+          <span class="badge badge--gray">ATUALIZAÇÕES</span>
+          <h3 class="news-card__title">Pet Sim 99: nova zona secreta libera pets com bilhões de dano</h3>
+          <p class="news-card__text">Lorem ipsum: os jogadores descobriram um portal escondido que dá acesso a pets ultra raros e moedas em dobro.</p>
+          <span class="meta">Há 3 horas &middot; Atualizações</span>
+        </article>
+
+        <article class="news-card">
+          <img src="img/news-doors.svg" alt="Doors" />
+          <span class="badge badge--gray">JOGOS</span>
+          <h3 class="news-card__title">Doors adiciona andar 100 com puzzle cooperativo assustador</h3>
+          <p class="news-card__text">A atualização promete sustos inéditos e recompensas permanentes para quem sobreviver ao novo desafio.</p>
+          <span class="meta">Há 5 horas &middot; Jogos</span>
+        </article>
+
+        <article class="news-card">
+          <img src="img/news-murder-mystery.svg" alt="Murder Mystery 2" />
+          <span class="badge badge--gray">COMUNIDADE</span>
+          <h3 class="news-card__title">Murder Mystery 2 traz facas e armas limitadas na temporada Halloween</h3>
+          <p class="news-card__text">Lorem ipsum adaptado: evento sazonal disponibiliza itens colecionáveis que aumentam de preço depois do término.</p>
+          <span class="meta">Há 7 horas &middot; Comunidade</span>
+        </article>
+
+        <article class="news-card">
+          <img src="img/news-arsenal.svg" alt="Arsenal" />
+          <span class="badge badge--gray">EVENTOS</span>
+          <h3 class="news-card__title">Arsenal anuncia torneio oficial com premiação em robux</h3>
+          <p class="news-card__text">A competição terá times de todo o mundo e transmissão ao vivo dentro da própria experiência.</p>
+          <span class="meta">Há 9 horas &middot; Eventos</span>
+        </article>
+
+        <article class="news-card">
+          <img src="img/news-grow-garden.svg" alt="Grow a Garden" />
+          <span class="badge badge--gray">JOGOS</span>
+          <h3 class="news-card__title">Grow a Garden: como plantar novas mutações e lucrar rápido</h3>
+          <p class="news-card__text">Lorem ipsum: guia com as melhores sementes, combinações de clima e horários para maximizar o lucro.</p>
+          <span class="meta">Há 11 horas &middot; Tutoriais</span>
+        </article>
+
+        <article class="news-card">
+          <img src="img/news-dress-impress.svg" alt="Dress to Impress" />
+          <span class="badge badge--gray">COMUNIDADE</span>
+          <h3 class="news-card__title">Dress to Impress: temas da semana e truques para tirar nota 5</h3>
+          <p class="news-card__text">Confira as combinações que mais pontuam e os acessórios que a comunidade considera obrigatórios.</p>
+          <span class="meta">Há 13 horas &middot; Comunidade</span>
+        </article>
+
+        <article class="news-card">
+          <img src="img/news-roblox-event.svg" alt="Evento Roblox" />
+          <span class="badge badge--gray">ATUALIZAÇÕES</span>
+          <h3 class="news-card__title">Roblox anuncia evento global com itens gratuitos para todos</h3>
+          <p class="news-card__text">Lorem ipsum: recompensas por login diário e missões entre vários jogos ficarão disponíveis por tempo limitado.</p>
+          <span class="meta">Há 15 horas &middot; Atualizações</span>
+        </article>
+
+        <article class="news-card">
+          <img src="img/hero-adopt-me.svg" alt="Adopt Me!" />
+          <span class="badge badge--gray">PROMO CODES</span>
+          <h3 class="news-card__title">Códigos expirados: veja a lista e evite perder tempo</h3>
+          <p class="news-card__text">Atualizamos a relação de códigos de Adopt Me! que não funcionam mais neste mês.</p>
+          <span class="meta">Há 18 horas &middot; Promo Codes</span>
+        </article>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         5. JOGOS EM ALTA (RANKING)
+         A barra .rank-item__bar é preenchida via style inline (--w).
+         ================================================================= -->
+    <section class="trending-section" aria-label="Jogos em alta">
+      <div class="container">
+        <h2 class="section-title">Jogos em Alta</h2>
+
+        <ol class="rank-list">
+          <li class="rank-item">
+            <span class="rank-item__num">1</span>
+            <img class="rank-item__img" src="img/news-grow-garden.svg" alt="Grow a Garden" />
+            <div class="rank-item__info">
+              <h3 class="rank-item__name">Grow a Garden</h3>
+              <div class="rank-item__bar"><span style="--w: 96%"></span></div>
+            </div>
+            <span class="rank-item__players">3,1 mi online</span>
+          </li>
+
+          <li class="rank-item">
+            <span class="rank-item__num">2</span>
+            <img class="rank-item__img" src="img/news-brookhaven.svg" alt="Brookhaven" />
+            <div class="rank-item__info">
+              <h3 class="rank-item__name">Brookhaven RP</h3>
+              <div class="rank-item__bar"><span style="--w: 88%"></span></div>
+            </div>
+            <span class="rank-item__players">2,7 mi online</span>
+          </li>
+
+          <li class="rank-item">
+            <span class="rank-item__num">3</span>
+            <img class="rank-item__img" src="img/hero-blox-fruits.svg" alt="Blox Fruits" />
+            <div class="rank-item__info">
+              <h3 class="rank-item__name">Blox Fruits</h3>
+              <div class="rank-item__bar"><span style="--w: 81%"></span></div>
+            </div>
+            <span class="rank-item__players">2,2 mi online</span>
+          </li>
+
+          <li class="rank-item">
+            <span class="rank-item__num">4</span>
+            <img class="rank-item__img" src="img/news-dress-impress.svg" alt="Dress to Impress" />
+            <div class="rank-item__info">
+              <h3 class="rank-item__name">Dress to Impress</h3>
+              <div class="rank-item__bar"><span style="--w: 64%"></span></div>
+            </div>
+            <span class="rank-item__players">1,4 mi online</span>
+          </li>
+
+          <li class="rank-item">
+            <span class="rank-item__num">5</span>
+            <img class="rank-item__img" src="img/news-pet-simulator.svg" alt="Pet Sim 99" />
+            <div class="rank-item__info">
+              <h3 class="rank-item__name">Pet Sim 99</h3>
+              <div class="rank-item__bar"><span style="--w: 55%"></span></div>
+            </div>
+            <span class="rank-item__players">980 mil online</span>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         6. PROMO CODES ATIVOS (TABELA)
+         ================================================================= -->
+    <section class="container codes-section" aria-label="Promo codes ativos">
+      <h2 class="section-title">Promo Codes Ativos</h2>
+      <p class="codes-section__hint">
+        Códigos verificados hoje. Copie e resgate antes que expirem!
+      </p>
+
+      <div class="codes-table__wrap">
+        <table class="codes-table">
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Jogo</th>
+              <th>Recompensa</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>BLOXG1FREE</code></td>
+              <td>Blox Fruits</td>
+              <td>2x XP por 20 min</td>
+              <td><span class="status status--ok">Ativo</span></td>
+            </tr>
+            <tr>
+              <td><code>ADOPTWINTER</code></td>
+              <td>Adopt Me!</td>
+              <td>Pet gelado raro</td>
+              <td><span class="status status--ok">Ativo</span></td>
+            </tr>
+            <tr>
+              <td><code>PETS99WIN</code></td>
+              <td>Pet Sim 99</td>
+              <td>10 mil moedas</td>
+              <td><span class="status status--ok">Ativo</span></td>
+            </tr>
+            <tr>
+              <td><code>GARDENBOOST</code></td>
+              <td>Grow a Garden</td>
+              <td>Semente lendária</td>
+              <td><span class="status status--warn">Expira hoje</span></td>
+            </tr>
+            <tr>
+              <td><code>DOORSFREE100</code></td>
+              <td>Doors</td>
+              <td>100 moedas</td>
+              <td><span class="status status--ok">Ativo</span></td>
+            </tr>
+            <tr>
+              <td><code>MM2HALLOWEEN</code></td>
+              <td>Murder Mystery 2</td>
+              <td>Baú surpresa</td>
+              <td><span class="status status--exp">Expirado</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         7. SEÇÃO DE VÍDEOS / EM ALTA
+         ================================================================= -->
+    <section class="videos-section" aria-label="Vídeos e conteúdos em alta">
+      <div class="container">
+        <h2 class="section-title section-title--light">Vídeos &amp; Em Alta</h2>
+
+        <div class="videos-grid">
+          <article class="video-card">
+            <div class="video-card__thumb">
+              <img src="img/video-tutorial.svg" alt="Vídeo em destaque 1" />
+              <span class="video-card__play" aria-hidden="true">&#9658;</span>
+            </div>
+            <h3 class="video-card__title">Tutorial: melhores builds e rotas de farm para iniciantes</h3>
+            <span class="meta meta--light">8:45 &middot; 1,2 mi de visualizações</span>
+          </article>
+
+          <article class="video-card">
+            <div class="video-card__thumb">
+              <img src="img/video-secrets.svg" alt="Vídeo em destaque 2" />
+              <span class="video-card__play" aria-hidden="true">&#9658;</span>
+            </div>
+            <h3 class="video-card__title">Segredos escondidos que quase ninguém encontrou no Roblox</h3>
+            <span class="meta meta--light">12:10 &middot; 980 mil visualizações</span>
+          </article>
+
+          <article class="video-card">
+            <div class="video-card__thumb">
+              <img src="img/video-review.svg" alt="Vídeo em destaque 3" />
+              <span class="video-card__play" aria-hidden="true">&#9658;</span>
+            </div>
+            <h3 class="video-card__title">Review: vale a pena investir robux neste jogo? Nós testamos</h3>
+            <span class="meta meta--light">6:32 &middot; 750 mil visualizações</span>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =================================================================
+       8. RODAPÉ (FOOTER)
+       ================================================================= -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo logo--footer">
+          <span class="logo__blox">Blox</span><span class="logo__g1">G1</span>
+        </a>
+        <p class="footer-brand__text">
+          Seu portal de notícias sobre o universo Roblox: jogos, atualizações,
+          promo codes, ranking e comunidade.
+        </p>
+      </div>
+
+      <nav class="footer-col" aria-label="Institucional">
+        <h4 class="footer-col__title">Institucional</h4>
+        <ul>
+          <li><a href="#">Sobre nós</a></li>
+          <li><a href="#">Contato</a></li>
+          <li><a href="#">Anuncie</a></li>
+          <li><a href="#">Política de privacidade</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-label="Editorias">
+        <h4 class="footer-col__title">Editorias</h4>
+        <ul>
+          <li><a href="#">Jogos</a></li>
+          <li><a href="#">Promo Codes</a></li>
+          <li><a href="#">Atualizações</a></li>
+          <li><a href="#">Comunidade</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-col">
+        <h4 class="footer-col__title">Redes Sociais</h4>
+        <div class="social-icons">
+          <!-- Ícones em SVG simples (sem dependências externas) -->
+          <a href="#" aria-label="Instagram" class="social-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .4 1.4.9.5.4.7.8.9 1.4.1.4.3 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.4 1-.9 1.4-.4.5-.8.7-1.4.9-.4.1-1 .3-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.4-1.4-.9-.5-.4-.7-.8-.9-1.4-.1-.4-.3-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.4-1 .9-1.4.4-.5.8-.7 1.4-.9.4-.1 1-.3 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3.2A6.6 6.6 0 1 0 18.6 12 6.6 6.6 0 0 0 12 5.4zm0 10.9A4.3 4.3 0 1 1 16.3 12 4.3 4.3 0 0 1 12 16.3zm6.9-11.2a1.5 1.5 0 1 1-1.5-1.5 1.5 1.5 0 0 1 1.5 1.5z"/></svg>
+          </a>
+          <a href="#" aria-label="YouTube" class="social-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7a2.9 2.9 0 0 0-2-2C18.9 4.8 12 4.8 12 4.8s-6.9 0-8.6.5a2.9 2.9 0 0 0-2 2C1 8.8 1 12 1 12s0 3.2.4 4.7a2.9 2.9 0 0 0 2 2c1.7.5 8.6.5 8.6.5s6.9 0 8.6-.5a2.9 2.9 0 0 0 2-2C23 15.2 23 12 23 12zM9.8 15.3V8.7l5.7 3.3z"/></svg>
+          </a>
+          <a href="#" aria-label="X (Twitter)" class="social-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M18.9 2h3.3l-7.2 8.3L23.5 22h-6.7l-5.2-6.8L5.6 22H2.3l7.7-8.8L1.5 2h6.9l4.7 6.2zm-1.2 18h1.8L7.4 3.9H5.4z"/></svg>
+          </a>
+          <a href="#" aria-label="Discord" class="social-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.2.4a14.8 14.8 0 0 1 4.3 2.1 14 14 0 0 0-12.9 0A14.8 14.8 0 0 1 10.9 3.4L10.7 3a19.8 19.8 0 0 0-5 1.4C2.5 8.6 1.7 12.7 2 16.7a19.9 19.9 0 0 0 6 3l.8-1.3a13 13 0 0 1-2-1l.5-.4a14.2 14.2 0 0 0 12.2 0l.5.4a13 13 0 0 1-2 1l.8 1.3a19.9 19.9 0 0 0 6-3c.4-4.6-.7-8.7-2.5-12.3zM9.3 14.3c-.9 0-1.7-.9-1.7-1.9s.8-1.9 1.7-1.9 1.7.9 1.7 1.9-.8 1.9-1.7 1.9zm5.4 0c-.9 0-1.7-.9-1.7-1.9s.8-1.9 1.7-1.9 1.7.9 1.7 1.9-.8 1.9-1.7 1.9z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; <span id="current-year">2026</span> BloxG1. Todos os direitos reservados.</p>
+        <p class="footer-disclaimer">
+          BloxG1 não é afiliado, associado ou endossado pela Roblox Corporation.
+          Todas as marcas pertencem aos seus respectivos proprietários.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script principal: cursor/relógio, ticker e menu mobile -->
+  <script src="script.js"></script>
+</body>
+</html>

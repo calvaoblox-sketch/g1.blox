@@ -1,0 +1,707 @@
+/* =====================================================================
+   BloxG1 - Portal de notícias do Roblox (estilo G1)
+   Arquivo: style.css
+   ---------------------------------------------------------------------
+   ÍNDICE:
+     01. Variáveis / Reset
+     02. Utilitários (container, badges, meta)
+     03. Header (faixa superior + logo + navegação)
+     04. Hero News (manchete principal + chamadas)
+     05. Grade de notícias
+     06. Seção de vídeos / em alta
+     07. Footer
+     08. Responsividade (media queries)
+
+   COMO PERSONALIZAR AS CORES:
+     Altere os valores em ":root" abaixo. Ex.: trocar o vermelho
+     escuro de destaque mudando a variável --red.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   01. VARIÁVEIS / RESET
+   --------------------------------------------------------------------- */
+:root {
+  /* Paleta estilo G1: branco, cinza claro, vermelho escuro e preto */
+  --white: #ffffff;
+  --gray-light: #f4f4f4;   /* cinza claro para fundos */
+  --gray-mid: #d9d9d9;     /* bordas e divisórias */
+  --gray-text: #6b6b6b;    /* texto secundário */
+  --black: #111111;        /* texto principal */
+  --red: #a80000;          /* vermelho escuro (identidade G1) */
+  --red-dark: #7a0000;     /* variação mais escura para hover */
+  --dark-bg: #1a1a1a;      /* fundo escuro (seção de vídeos/footer) */
+
+  /* Tipografia */
+  --font: 'Roboto', Arial, Helvetica, sans-serif;
+
+  /* Layout */
+  --max-width: 1200px;
+  --radius: 4px;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  --transition: 0.25s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font);
+  color: var(--black);
+  background: var(--white);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+/* ---------------------------------------------------------------------
+   02. UTILITÁRIOS
+   --------------------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Badges de categoria (usados nas notícias) */
+.badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: var(--radius);
+  margin-bottom: 8px;
+}
+.badge--red { background: var(--red); color: var(--white); }
+.badge--gray { background: var(--gray-light); color: var(--red); }
+
+/* Texto de metadados (data/autorização) */
+.meta {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--gray-text);
+  margin-top: 8px;
+}
+.meta--light { color: #bbbbbb; }
+
+/* Título de seção */
+.section-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 40px 0 22px;
+  padding-left: 12px;
+  border-left: 5px solid var(--red);
+  line-height: 1.2;
+}
+.section-title--light { color: var(--white); border-left-color: var(--red); }
+
+/* ---------------------------------------------------------------------
+   03. HEADER
+   --------------------------------------------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+/* Faixa vermelha superior com data/hora */
+.top-strip {
+  background: var(--red);
+  color: var(--white);
+  font-size: 0.8rem;
+}
+.top-strip__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 34px;
+}
+.top-strip__tag {
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+.top-strip__clock {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-variant-numeric: tabular-nums;
+}
+.clock-sep { opacity: 0.6; }
+
+/* Linha principal do header */
+.header-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+
+/* Logo BloxG1 */
+.logo {
+  font-size: 1.9rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.logo__blox { color: var(--black); }
+.logo__g1 { color: var(--red); }
+.logo--footer .logo__blox { color: var(--white); }
+
+/* Navegação principal */
+.main-nav__list {
+  display: flex;
+  gap: 26px;
+}
+.main-nav__link {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--black);
+  padding: 6px 0;
+  position: relative;
+  transition: color var(--transition);
+}
+.main-nav__link:hover,
+.main-nav__link.is-active { color: var(--red); }
+/* Sublinhado animado no hover do menu */
+.main-nav__link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 3px;
+  background: var(--red);
+  transition: width var(--transition);
+}
+.main-nav__link:hover::after,
+.main-nav__link.is-active::after { width: 100%; }
+
+/* Botão hambúrguer (mobile) */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+}
+.menu-toggle span {
+  width: 26px;
+  height: 3px;
+  background: var(--black);
+  border-radius: 2px;
+  transition: var(--transition);
+}
+/* Animação do hambúrguer quando o menu está aberto */
+.menu-toggle.is-open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.menu-toggle.is-open span:nth-child(2) { opacity: 0; }
+.menu-toggle.is-open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* ---------------------------------------------------------------------
+   04. HERO NEWS
+   --------------------------------------------------------------------- */
+.hero {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 18px;
+  margin-top: 26px;
+}
+
+/* Manchete principal com imagem de fundo */
+.hero__main {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  min-height: 430px;
+}
+.hero__main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+  transition: transform 0.5s ease;
+}
+.hero__main:hover .hero__main-img { transform: scale(1.04); }
+/* Overlay para garantir leitura do texto sobre a imagem */
+.hero__main-overlay {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 26px;
+  color: var(--white);
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 55%, rgba(0,0,0,0) 100%);
+}
+.hero__main-title {
+  font-size: 2rem;
+  line-height: 1.2;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.hero__main-sub {
+  font-size: 0.95rem;
+  max-width: 90%;
+  opacity: 0.92;
+}
+.hero__main-overlay .meta { color: #cccccc; }
+
+/* Coluna lateral com 2 chamadas */
+.hero__side {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.hero__card {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  flex: 1;
+  background: var(--black);
+}
+.hero__card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+  transition: transform 0.5s ease;
+}
+.hero__card:hover img { transform: scale(1.05); }
+.hero__card-body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  min-height: 200px;
+  padding: 18px;
+  color: var(--white);
+  background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.1) 80%);
+}
+.hero__card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.hero__card-body .meta { color: #cccccc; }
+
+/* ---------------------------------------------------------------------
+   05. GRADE DE NOTÍCIAS
+   --------------------------------------------------------------------- */
+.news-grid-section { margin-bottom: 10px; }
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.news-card {
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--gray-mid);
+  transition: transform var(--transition);
+}
+.news-card:hover { transform: translateY(-4px); }
+.news-card img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+}
+.news-card__title {
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 6px;
+  transition: color var(--transition);
+}
+.news-card:hover .news-card__title { color: var(--red); }
+.news-card__text {
+  font-size: 0.9rem;
+  color: var(--gray-text);
+}
+
+/* ---------------------------------------------------------------------
+   06. SEÇÃO DE VÍDEOS / EM ALTA
+   --------------------------------------------------------------------- */
+.videos-section {
+  background: var(--dark-bg);
+  padding: 20px 0 50px;
+  margin-top: 50px;
+}
+.videos-section .section-title { margin-top: 30px; }
+
+.videos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.video-card { color: var(--white); }
+.video-card__thumb {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.video-card__thumb img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.5s ease, opacity var(--transition);
+}
+.video-card:hover .video-card__thumb img {
+  transform: scale(1.05);
+  opacity: 0.8;
+}
+/* Botão de play sobreposto */
+.video-card__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(168, 0, 0, 0.9);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  padding-left: 4px;
+  transition: background var(--transition), transform var(--transition);
+}
+.video-card:hover .video-card__play {
+  background: var(--red-dark);
+  transform: translate(-50%, -50%) scale(1.1);
+}
+.video-card__title {
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+/* ---------------------------------------------------------------------
+   07. FOOTER
+   --------------------------------------------------------------------- */
+.site-footer {
+  background: #0e0e0e;
+  color: #cccccc;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 30px;
+  padding: 50px 20px;
+}
+.footer-brand__text {
+  font-size: 0.9rem;
+  margin-top: 14px;
+  max-width: 320px;
+  color: #999999;
+}
+.footer-col__title {
+  color: var(--white);
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 14px;
+}
+.footer-col li { margin-bottom: 9px; }
+.footer-col a {
+  font-size: 0.9rem;
+  color: #999999;
+  transition: color var(--transition);
+}
+.footer-col a:hover { color: var(--white); }
+
+/* Ícones de redes sociais */
+.social-icons { display: flex; gap: 12px; }
+.social-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #1f1f1f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #cccccc;
+  transition: background var(--transition), color var(--transition);
+}
+.social-icon:hover {
+  background: var(--red);
+  color: var(--white);
+}
+
+.footer-bottom {
+  border-top: 1px solid #222222;
+  padding: 20px 0;
+  font-size: 0.8rem;
+  color: #777777;
+}
+.footer-disclaimer {
+  margin-top: 6px;
+  font-size: 0.75rem;
+  color: #555555;
+}
+
+/* ---------------------------------------------------------------------
+   07-B. TICKER DE "ÚLTIMAS" (manchetes rolando)
+   --------------------------------------------------------------------- */
+.ticker {
+  display: flex;
+  align-items: center;
+  height: 38px;
+  background: var(--gray-light);
+  border-top: 1px solid var(--gray-mid);
+  border-bottom: 1px solid var(--gray-mid);
+  overflow: hidden;
+}
+.ticker__label {
+  flex: 0 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  background: var(--red);
+  color: var(--white);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.ticker__viewport {
+  flex: 1;
+  overflow: hidden;
+}
+.ticker__track {
+  display: inline-flex;
+  gap: 44px;
+  white-space: nowrap;
+  padding-left: 24px;
+  /* A animação faz a faixa rolar da direita para a esquerda */
+  animation: ticker-scroll 30s linear infinite;
+}
+.ticker:hover .ticker__track { animation-play-state: paused; }
+.ticker__item {
+  font-size: 0.85rem;
+  color: var(--black);
+  position: relative;
+}
+.ticker__item::after {
+  content: '•';
+  color: var(--red);
+  margin-left: 44px;
+  position: absolute;
+}
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ---------------------------------------------------------------------
+   07-C. JOGOS EM ALTA (RANKING)
+   --------------------------------------------------------------------- */
+.trending-section {
+  background: var(--gray-light);
+  padding: 10px 0 46px;
+  margin-top: 50px;
+}
+.rank-list {
+  counter-reset: rank;
+}
+.rank-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--white);
+  padding: 12px 18px;
+  border-radius: var(--radius);
+  margin-bottom: 10px;
+  box-shadow: var(--shadow);
+  transition: transform var(--transition);
+}
+.rank-item:hover { transform: translateX(4px); }
+.rank-item__num {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--red);
+  min-width: 30px;
+  text-align: center;
+}
+.rank-item__img {
+  width: 64px;
+  height: 46px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  flex: 0 0 auto;
+}
+.rank-item__info { flex: 1; min-width: 0; }
+.rank-item__name {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+/* Barra de popularidade: largura definida pela variável --w inline */
+.rank-item__bar {
+  height: 8px;
+  background: var(--gray-mid);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.rank-item__bar span {
+  display: block;
+  height: 100%;
+  width: var(--w, 50%);
+  background: linear-gradient(90deg, var(--red), #e04040);
+  border-radius: 99px;
+}
+.rank-item__players {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--gray-text);
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------------
+   07-D. PROMO CODES (TABELA)
+   --------------------------------------------------------------------- */
+.codes-section { margin-bottom: 10px; }
+.codes-section__hint {
+  color: var(--gray-text);
+  font-size: 0.9rem;
+  margin: -12px 0 20px 12px;
+}
+.codes-table__wrap {
+  overflow-x: auto;             /* permite rolar no mobile */
+  border: 1px solid var(--gray-mid);
+  border-radius: var(--radius);
+}
+.codes-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 560px;
+}
+.codes-table th,
+.codes-table td {
+  text-align: left;
+  padding: 14px 18px;
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--gray-light);
+}
+.codes-table thead th {
+  background: var(--black);
+  color: var(--white);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.codes-table tbody tr:hover { background: var(--gray-light); }
+.codes-table code {
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+  color: var(--red);
+  background: var(--gray-light);
+  padding: 4px 8px;
+  border-radius: var(--radius);
+}
+.status {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 99px;
+}
+.status--ok   { background: #e3f6e8; color: #1c7c3c; }
+.status--warn { background: #fff4d6; color: #9a6b00; }
+.status--exp  { background: #f0f0f0; color: #888888; }
+
+/* ---------------------------------------------------------------------
+   08. RESPONSIVIDADE
+   --------------------------------------------------------------------- */
+
+/* Tablets (até 992px) */
+@media (max-width: 992px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero__main { min-height: 360px; }
+  .hero__side { flex-direction: row; }
+  .news-grid { grid-template-columns: repeat(2, 1fr); }
+  .videos-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .hero__main-title { font-size: 1.6rem; }
+}
+
+/* Celulares (até 620px) */
+@media (max-width: 620px) {
+  .header-main { height: 64px; }
+
+  /* Exibe o botão hambúrguer e transforma o menu em dropdown */
+  .menu-toggle { display: flex; }
+  .main-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--white);
+    box-shadow: var(--shadow);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--transition);
+  }
+  .main-nav.is-open { max-height: 400px; }
+  .main-nav__list {
+    flex-direction: column;
+    gap: 0;
+    padding: 10px 20px;
+  }
+  .main-nav__link {
+    display: block;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--gray-light);
+  }
+  .main-nav__link::after { display: none; }
+
+  .hero__side { flex-direction: column; }
+  .hero__main { min-height: 300px; }
+  .hero__main-overlay { padding: 18px; }
+  .hero__main-title { font-size: 1.35rem; }
+  .hero__main-sub { display: none; } /* esconde resumo no mobile */
+
+  .news-grid,
+  .videos-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; padding: 34px 20px; }
+  .section-title { font-size: 1.35rem; }
+
+  /* Ranking e ticker mais compactos no celular */
+  .rank-item { gap: 10px; padding: 10px 12px; }
+  .rank-item__img { width: 50px; height: 38px; }
+  .rank-item__players { display: none; }
+  .ticker__label { padding: 0 10px; font-size: 0.68rem; }
+  .ticker__item { font-size: 0.78rem; }
+}
